@@ -1,0 +1,232 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+
+body{
+    background-color: #f5f5f5;
+}
+
+ul, li {
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(248, 173, 98);
+}
+/* 导航栏 */
+.nav-bar{
+    display: flex;
+    background-color: rgb(245, 245, 197);
+}
+/* 水平居中 */
+.nav-bar-menu{
+    margin: 0 auto;
+}
+
+.menu-list{
+    display: flex;
+    height: 56px;
+    line-height: 56px;
+}
+
+.menu-list span{
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: bolder;
+    background: linear-gradient(to right, #ec695c, #61c454) no-repeat right bottom;
+    background-size: 0 1px;
+    transition: background-size 0.5s;
+    cursor: pointer;
+}
+
+.menu-list span:hover{
+    background-size: 100% 1px;
+    background-position-x:left ;
+}
+
+.menu-list li a:hover{
+    color: rgb(156, 188, 247);
+    transition: color 0.5s;
+}
+
+.avatar{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 10px;
+    margin-left: 100px;
+    cursor: pointer;
+}
+
+.menu-list .svg{
+    width: 20px;
+    height: 20px;
+    margin: 18px 0;
+    vertical-align: middle;
+    cursor: pointer;
+}
+/* 个人信息 */
+.my-info {
+    position: relative;
+    background: linear-gradient(to bottom, rgb(245, 245, 197), rgb(172, 212, 244));
+    height: 400px;
+    display: flex; /* 使用flex布局实现左右并列 */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.basic-info {
+    width: 15%; /* 左侧占20% */
+    display: flex;
+    align-items: center;
+}
+
+/* 信息详情样式 */
+.info-detail {
+    width: 85%; /* 右侧占80% */
+    position: relative; 
+    margin-left: 20px;
+    height: 400px; /* 固定高度 */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    left: auto; /* 取消左定位 */
+    top: auto; /* 取消顶部定位 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-detail.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 调整基本信息列表位置 */
+.basic-info-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-left: 20px;
+    width: 100%;
+}
+
+.basic-info-item{
+    height: 50px;
+    width: 200px;
+    border: 1px solid rgba(79, 196, 225, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+.basic-info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(79, 196, 225, 0.6);
+}
+
+.basic-info-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.basic-info-list span{
+    height: 50px;
+    line-height: 50px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.basic-info-list li:first-child{
+    border-radius: 12px 12px 0 0;
+}
+
+.basic-info-list li:last-child{
+    border-radius: 0 0 12px 12px;
+}
+
+.basic-info-list .svg{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+}
+
+/* Markdown样式优化 */
+.info-detail div {
+    display: none;
+    animation: fadeIn 0.3s ease;
+    padding: 20px;
+    max-width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.info-detail div.active {
+    display: block;
+}
+
+/* Markdown元素样式 */
+.info-detail h1 {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.info-detail h2 {
+    font-size: 24px;
+    margin-bottom: 14px;
+    color: #444;
+}
+
+.info-detail h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #555;
+}
+
+.info-detail p {
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+
+.info-detail ul, .info-detail ol {
+    margin-left: 20px;
+    margin-bottom: 16px;
+}
+
+.info-detail li {
+    margin-bottom: 8px;
+}
+
+.info-detail blockquote {
+    border-left: 4px solid #ddd;
+    padding-left: 16px;
+    margin-left: 0;
+    color: #666;
+    font-style: italic;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 个人经历 */
+.my-story{
+    background:linear-gradient(to bottom, rgb(172, 212, 244),rgb(244, 172, 240) ); ;
+    height: 600px;
+}
