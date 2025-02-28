@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.basic-info-item');
     const infoDetail = document.querySelector('.info-detail');
-    const basicInfoArea = document.querySelector('.basic-info');
     const nameDetail= document.querySelector('.name-detail');
     let lastActiveIndex = 0; // 设为0，表示默认第一项激活
     let isDetailActive = true; // 默认为true，表示详情区域激活
@@ -25,27 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
          });
      });
      
-     // 滚动时确定当前位置
-     window.addEventListener('scroll', function() {
-         let current = '';
-         
-         // 确定当前滚动位置
-         sections.forEach(section => {
-             const sectionTop = section.offsetTop;
-             const sectionHeight = section.clientHeight;
-             if(pageYOffset >= (sectionTop - 100)) {
-                 current = '#' + section.getAttribute('id');
-             }
-         });
-         
-         // 更新活动链接
-         navLinks.forEach(link => {
-             link.classList.remove('active');
-             if(link.getAttribute('href') === current) {
-                 link.classList.add('active');
-             }
-         });
-     });
+
     // 默认显示nameDetail
     nameDetail.classList.add('active');
     infoDetail.classList.add('active'); // 确保容器也是激活状态

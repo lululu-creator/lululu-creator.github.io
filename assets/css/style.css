@@ -390,19 +390,6 @@ a{
     color: rgba(0, 0, 0, 0.5);
 }
 
-/* 适配dark模式 */
-@media (prefers-color-scheme: dark) {
-    .aside-bar-item {
-        background: rgba(30, 30, 40, 0.4);
-    }
-    
-    .aside-bar-list span {
-        background: linear-gradient(45deg, #e0e0e0, #b0b0b0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-}
-
 /* 个人经历内容盒子样式 */
 .story-container {
     width: 85%;
@@ -703,15 +690,6 @@ a{
     color: #555;
     font-size: 14px;
 }
-
-/* 删除或注释掉这部分代码 */
-/* 
-.education-content {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-}
-*/
 
 .my-story span{
     font-size: 14px;
