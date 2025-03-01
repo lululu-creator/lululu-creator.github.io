@@ -65,3 +65,10 @@
 - **📧 邮 箱**：1104507145@qq.com
 - **🐱 代码基地**：[@lululu-creator](https://github.com/lululu-creator)
 - **🔑 暗号**："console.log('你好呀')"（欢迎在GitHub提issue📥）
+
+---
+
+> **🚀 关于迭代**：这个1.0版本就像最初的Hello World 🌍，会随着我的成长不断进化 🧬。每个commit都是学习路上的脚印 👣，期待与你同行。
+
+![开源标志](https://img.shields.io/badge/🚀-Open--Source-%2344cc11?style=for-the-badge)  
+（项目完全开源，欢迎来GitHub帮我捉虫！🐛🔍）
