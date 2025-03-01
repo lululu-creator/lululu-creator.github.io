@@ -177,4 +177,383 @@ document.addEventListener('DOMContentLoaded', () => {
             this.querySelector('.project-overlay').style.opacity = '0';
         });
     });
+    const articles = [
+        {
+            id: 1,
+            title: "JavaScript中的异步编程学习",
+            category: "frontend",
+            tags: ["JavaScript", "异步编程", "Promise"],
+            date: { day: "1", month: "Mar", year: "2025" },
+            excerpt: "探索Promise、async/await和回调函数在现代JavaScript中的应用，以及如何构建更高效的异步流程。",
+            readTime: "8分钟阅读",
+            filePath: "articles/frontend/javascript-async-programming.md"
+        },
+        {
+            id: 2,
+            title: "网页设计中的色彩",
+            category: "design",
+            tags: ["设计理念", "UI/UX"],
+            date: { day: "xx", month: "xx", year: "xx" },
+            excerpt: "色彩如何影响用户体验与情绪，以及如何运用低饱和度配色方案创造高级质感的网页设计。",
+            readTime: "x分钟阅读",
+            filePath: "articles/design/color-psychology.md"
+        },
+        {
+            id: 3,
+            title: "从零开始的前端学习路线图",
+            category: "experience",
+            tags: ["经验分享", "学习方法"],
+            date: { day: "xx", month: "xx", year: "xx" },
+            excerpt: "分享我的前端学习经验，从入门到进阶的资源推荐，以及如何避免常见的学习误区和陷阱。",
+            readTime: "xx分钟阅读",
+            filePath: "articles/experience/frontend-learning-path.md"
+        },
+        {
+            id: 4,
+            title: "CSS Grid布局实战",
+            category: "frontend",
+            tags: ["前端开发", "CSS"],
+            date: { day: "xx", month: "xx", year: "xx" },
+            excerpt: "学习理解CSS Grid的核心概念，通过实例讲解如何创建复杂的响应式网格布局。",
+            readTime: "x分钟阅读",
+            filePath: "articles/frontend/css-grid-layout.md"
+        },
+        {
+            id: 5,
+            title: "xx",
+            category: "experience",
+            tags: ["经验分享", "xx"],
+            date: { day: "xx", month: "xx", year: "xx" },
+            excerpt: "xx",
+            readTime: "x分钟阅读",
+            filePath: "articles/experience/project-management.md"
+        },
+    ];
+    
+    // 当前筛选类别和页码
+    let currentCategory = 'all';
+    let currentPage = 1;
+    const articlesPerPage = 3; // 每页显示3篇文章
+    
+    // 获取DOM元素
+    const articlesContainer = document.querySelector('.articles-container');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const paginationNumbersContainer = document.querySelector('.pagination-numbers');
+    const prevBtn = document.querySelector('.pagination-btn.prev');
+    const nextBtn = document.querySelector('.pagination-btn.next');
+    const articleModal = document.getElementById('articleModal');
+    const closeArticleModalBtn = document.querySelector('.close-article-modal');
+    const articleModalBody = document.querySelector('.article-modal-body');
+    const articleCategory = document.querySelector('.article-category');
+    
+    // 初始化文章展示
+    function initArticles() {
+        // 确保文章区域存在
+        if (!articlesContainer) return;
+        
+        // 初始化分页
+        updatePagination();
+        
+        // 显示文章
+        displayArticles();
+        
+        // 添加筛选按钮事件
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 更新按钮状态
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 更新当前类别和页码
+                currentCategory = this.getAttribute('data-category');
+                currentPage = 1;
+                
+                // 重新显示文章和分页
+                updatePagination();
+                displayArticles();
+            });
+        });
+        
+        // 分页按钮事件
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                    displayArticles();
+                }
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                const totalPages = Math.ceil(getFilteredArticles().length / articlesPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                    displayArticles();
+                }
+            });
+        }
+        
+        // 关闭文章模态框事件
+        if (closeArticleModalBtn) {
+            closeArticleModalBtn.addEventListener('click', function() {
+                articleModal.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+        }
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(event) {
+            if (event.target == articleModal) {
+                articleModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && articleModal.style.display === 'block') {
+                articleModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // 获取当前筛选的文章
+    function getFilteredArticles() {
+        if (currentCategory === 'all') {
+            return articles;
+        } else {
+            return articles.filter(article => article.category === currentCategory);
+        }
+    }
+    
+    // 更新分页
+    function updatePagination() {
+        if (!paginationNumbersContainer) return;
+        
+        const filteredArticles = getFilteredArticles();
+        const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+        
+        // 清空分页数字
+        paginationNumbersContainer.innerHTML = '';
+        
+        // 创建分页数字
+        for (let i = 1; i <= totalPages; i++) {
+            const pageNumber = document.createElement('span');
+            pageNumber.classList.add('page-number');
+            if (i === currentPage) {
+                pageNumber.classList.add('active');
+            }
+            pageNumber.textContent = i;
+            pageNumber.addEventListener('click', function() {
+                currentPage = i;
+                updatePagination();
+                displayArticles();
+            });
+            paginationNumbersContainer.appendChild(pageNumber);
+        }
+        
+        // 更新上一页/下一页按钮状态
+        if (prevBtn) prevBtn.disabled = currentPage === 1;
+        if (nextBtn) nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+    }
+    
+    // 显示文章
+    function displayArticles() {
+        if (!articlesContainer) return;
+        
+        // 清空文章容器
+        articlesContainer.innerHTML = '';
+        
+        // 获取当前页的文章
+        const filteredArticles = getFilteredArticles();
+        const startIndex = (currentPage - 1) * articlesPerPage;
+        const endIndex = Math.min(startIndex + articlesPerPage, filteredArticles.length);
+        const currentPageArticles = filteredArticles.slice(startIndex, endIndex);
+        
+        // 如果没有文章，显示提示
+        if (currentPageArticles.length === 0) {
+            const noArticles = document.createElement('div');
+            noArticles.classList.add('no-articles');
+            noArticles.textContent = '暂无相关文章';
+            noArticles.style.textAlign = 'center';
+            noArticles.style.padding = '50px 0';
+            noArticles.style.color = '#64748b';
+            noArticles.style.fontSize = '18px';
+            noArticles.style.width = '100%';
+            articlesContainer.appendChild(noArticles);
+            return;
+        }
+        
+        // 创建文章卡片
+        currentPageArticles.forEach((article, index) => {
+            const articleCard = document.createElement('div');
+            articleCard.classList.add('article-card');
+            
+            articleCard.innerHTML = `
+                <div class="article-content">
+                    <div class="article-tags">
+                        ${article.tags.map(tag => `<span class="article-tag">${tag}</span>`).join('')}
+                    </div>
+                    <h3 class="article-title">${article.title}</h3>
+                    <div class="article-date">
+                        <span class="day">${article.date.day}</span>
+                        <span class="month">${article.date.month}</span>
+                        <span class="year">${article.date.year}</span>
+                    </div>
+                    <p class="article-excerpt">${article.excerpt}</p>
+                    <div class="article-footer">
+                        <span class="read-time"><i class="read-icon">⏱</i> ${article.readTime}</span>
+                        <a href="#" class="read-more" data-article-id="${article.id}">阅读全文 →</a>
+                    </div>
+                </div>
+            `;
+            
+            // 添加淡入动画
+            setTimeout(() => {
+                articleCard.classList.add('visible');
+            }, index * 100);
+            
+            // 阅读全文点击事件
+            const readMoreBtn = articleCard.querySelector('.read-more');
+            readMoreBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const articleId = parseInt(this.getAttribute('data-article-id'));
+                openArticle(articleId);
+            });
+            
+            articlesContainer.appendChild(articleCard);
+        });
+    }
+    
+    // 在openArticle函数中修改以下代码
+    async function openArticle(articleId) {
+        if (!articleModal || !articleModalBody) {
+            console.error('Modal elements not found');
+            return;
+        }
+        
+        const article = articles.find(a => a.id === articleId);
+        if (!article) {
+            console.error('Article not found:', articleId);
+            return;
+        }
+        
+        try {
+            // 显示加载状态
+            articleModalBody.innerHTML = '<div class="loading" style="text-align: center; padding: 50px 0; color: #64748b;">正在加载文章内容...</div>';
+            
+            // 显示模态框
+            articleModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // 获取文章内容
+            const response = await fetch(article.filePath);
+            if (!response.ok) {
+                throw new Error(`无法加载文章 (状态: ${response.status})`);
+            }
+            
+            let markdown = await response.text();
+            
+            // 检查marked是否可用
+            if (typeof marked === 'undefined') {
+                console.error('Marked库未加载，使用简易Markdown解析');
+                // 使用简易解析作为备选
+                const parsedContent = simpleParseMarkdown(markdown);
+                articleModalBody.innerHTML = parsedContent;
+            } else {
+                try {
+                    // 使用marked解析Markdown
+                    const htmlContent = marked.parse(markdown); // 使用marked.parse而非直接调用marked
+                    articleModalBody.innerHTML = htmlContent;
+                } catch (markdownError) {
+                    console.error('Marked解析错误:', markdownError);
+                    // 回退到简易解析
+                    const parsedContent = simpleParseMarkdown(markdown);
+                    articleModalBody.innerHTML = parsedContent;
+                }
+            }
+            
+            // 更新文章分类
+            const categorySpan = document.querySelector('.article-category');
+            if (categorySpan) {
+                categorySpan.textContent = getCategoryName(article.category);
+            }
+            
+            // 应用代码高亮
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('.article-modal-body pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+            
+        } catch (error) {
+            console.error('Article loading error:', error);
+            articleModalBody.innerHTML = `<div class="error" style="text-align: center; padding: 50px 20px; color: #ef4444;">
+                <p style="font-size: 20px; margin-bottom: 10px;">加载文章失败</p>
+                <p style="font-size: 14px; color: #64748b;">${error.message}</p>
+            </div>`;
+        }
+    }
+    
+    // 添加一个简易的Markdown解析函数作为备选
+    function simpleParseMarkdown(markdown) {
+        // 移除文件路径注释
+        markdown = markdown.replace(/\/\/ filepath:.*\n/, '');
+        
+        // 标题
+        markdown = markdown.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+        markdown = markdown.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+        markdown = markdown.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+        markdown = markdown.replace(/^#### (.*$)/gm, '<h4>$1</h4>');
+        
+        // 代码块
+        markdown = markdown.replace(/```([\s\S]*?)```/gm, function(match, code) {
+            return `<pre><code>${escapeHTML(code.trim())}</code></pre>`;
+        });
+        
+        // 列表项
+        markdown = markdown.replace(/^\s*[-*]\s+(.*$)/gm, '<li>$1</li>');
+        markdown = markdown.replace(/(<li>.*<\/li>\s*)+/gs, '<ul>$&</ul>');
+        
+        // 加粗和斜体
+        markdown = markdown.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        markdown = markdown.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        
+        // 链接
+        markdown = markdown.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+        
+        // 段落
+        markdown = markdown.replace(/^(?!<[houlprea])[^\n]+$/gm, function(match) {
+            return match.trim() ? `<p>${match}</p>` : '';
+        });
+        
+        return markdown;
+    }
+    
+    // 添加HTML转义函数
+    function escapeHTML(text) {
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+    
+    // 获取分类名称
+    function getCategoryName(category) {
+        const categoryMap = {
+            'frontend': '前端开发',
+            'design': '设计理念',
+            'experience': '经验分享'
+        };
+        return categoryMap[category] || category;
+    }
+    
+    // 初始化文章功能
+    initArticles();
 });

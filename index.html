@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>crayon的个人网站</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- 在HTML的head部分添加 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('.article-modal-body pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -839,7 +851,7 @@
                         </div>
                         <div class="project-info">
                             <h3>项目描述</h3>
-                            <p> 
+                            <p>
                                 基于Python及多种第三方库实现的配有UI界面的多功能爬虫程序
                             </p>
                             <h3>技术栈</h3>
@@ -859,6 +871,48 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- 文章展示 -->
+    <div class="my-articles" id="my-articles">
+        <div class="articles-header">
+            <h2>我的文章</h2>
+            <p>分享我的学习笔记与技术心得</p>
+        </div>
+
+        <div class="articles-filter">
+            <button class="filter-btn active" data-category="all">全部</button>
+            <button class="filter-btn" data-category="frontend">前端开发</button>
+            <button class="filter-btn" data-category="design">设计理念</button>
+            <button class="filter-btn" data-category="experience">经验分享</button>
+        </div>
+
+        <div class="articles-container">
+            <!-- 文章卡片会通过JS动态加载 -->
+        </div>
+
+        <div class="articles-pagination">
+            <button class="pagination-btn prev" disabled>← 上一页</button>
+            <div class="pagination-numbers">
+                <!-- 页码会通过JS动态生成 -->
+            </div>
+            <button class="pagination-btn next">下一页 →</button>
+        </div>
+    </div>
+
+    <!-- 文章阅读模态框 -->
+    <div class="article-modal" id="articleModal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-article-modal">&times;</button>
+                <div class="article-breadcrumb">
+                    <a href="#my-articles">文章</a> / 
+                    <span class="article-category">前端开发</span>
+                </div>
+            </div>
+            <div class="article-modal-body">
+                <!-- Markdown内容将在这里渲染 -->
             </div>
         </div>
     </div>
