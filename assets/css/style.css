@@ -320,6 +320,12 @@ a{
     width: 100%;
 }
 
+@media screen and (max-width: 768px) {
+    .aside-bar-item:hover::after {
+        width: 0;
+    }
+}
+
 .aside-bar-item:active {
     transform: translateY(-2px) scale(0.98);
 }
