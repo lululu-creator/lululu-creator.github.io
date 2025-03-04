@@ -21,8 +21,6 @@ a{
     text-decoration: none;
     color: rgb(248, 173, 98);
 }
-
-
 /* 导航栏 */
 .nav-bar{
     display: flex;
@@ -320,12 +318,6 @@ a{
 
 .aside-bar-item:hover::after {
     width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-    .aside-bar-item:hover::after {
-        width: 0;
-    }
 }
 
 .aside-bar-item:active {

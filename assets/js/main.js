@@ -210,13 +210,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             id: 4,
-            title: "CSS Grid布局实战",
+            title: "JavaScript中的闭包学习",
             category: "frontend",
-            tags: ["前端开发", "CSS"],
-            date: { day: "xx", month: "xx", year: "xx" },
-            excerpt: "学习理解CSS Grid的核心概念，通过实例讲解如何创建复杂的响应式网格布局。",
-            readTime: "x分钟阅读",
-            filePath: "articles/frontend/css-grid-layout.md"
+            tags: ["前端开发", "JavaScript", "闭包"],
+            date: { day: "3", month: "Mar", year: "2025" },
+            excerpt: "学习理解闭包的概念、工作原理和实际应用，以及如何在JavaScript中使用闭包。",
+            readTime: "5分钟阅读",
+            filePath: "articles/frontend/JavaScriptClosures.md"
         },
         {
             id: 5,
