@@ -324,6 +324,12 @@ a{
     transform: translateY(-2px) scale(0.98);
 }
 
+@media screen and (max-width: 768px) {
+    .aside-bar-item:hover::after {
+        width: 0;
+    }
+}
+
 /* 项目状态指示器 */
 .aside-bar-item::before {
     content: '';
