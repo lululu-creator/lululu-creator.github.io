@@ -220,13 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             id: 5,
-            title: "xx",
-            category: "experience",
-            tags: ["经验分享", "xx"],
-            date: { day: "xx", month: "xx", year: "xx" },
-            excerpt: "xx",
-            readTime: "x分钟阅读",
-            filePath: "articles/experience/project-management.md"
+            title: "通过对cozeAPI的调用实践来理解和学习网络请求",
+            category: "frontend",
+            tags: ["前端开发", "网络请求", "API"],
+            date: { day: "5", month: "Mar", year: "2025" },
+            excerpt: "通过实际项目中对cozeAPI的调用实践，学习如何发起网络请求、处理响应和处理错误。",
+            readTime: "20分钟阅读",
+            filePath: "articles/frontend/callTheCozeApi.md"
         },
     ];
     
