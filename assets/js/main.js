@@ -13,10 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
      // 当点击导航链接时
      navLinks.forEach(link => {
          link.addEventListener('click', function(e) {
-             // 获取目标部分的ID
-             const targetId = this.getAttribute('href');
-             
-             // 可选：添加点击动画效果
              link.classList.add('clicked');
              setTimeout(() => {
                  link.classList.remove('clicked');
@@ -66,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         storyContents[0].classList.add('active');
     }
     
-    // 默认设置第一个侧边栏项目为活跃状态
+    // 默认设置第一个侧边栏项目为active
     asideItems.forEach(item => {
         item.classList.remove('active');
     });
@@ -74,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         asideItems[0].classList.add('active');
     }
     
-    // 为aside-bar-item添加内容切换功能（移除波纹效果）
     asideItems.forEach((item, index) => {
         item.addEventListener('click', function() {
             // 为当前元素添加active类，移除其他元素的active类
@@ -82,8 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 otherItem.classList.remove('active');
             });
             this.classList.add('active');
-            
-            // 显示对应的内容区
+
             storyContents.forEach(content => {
                 content.classList.remove('active');
             });
@@ -123,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewBtns = document.querySelectorAll('.preview-btn');
     const modalProjects = document.querySelectorAll('.modal-project');
     
-    // 点击预览按钮打开模态框
+    // 点击预览按钮打开预览框
     previewBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const projectId = this.getAttribute('data-project');
@@ -133,33 +127,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 project.style.display = 'none';
             });
             
-            // 显示当前项目详情
             document.getElementById(`${projectId}-details`).style.display = 'block';
             
-            // 显示模态框
             modal.style.display = 'block';
+
             document.body.style.overflow = 'hidden'; // 防止背景滚动
         });
     });
     
-    // 点击关闭按钮关闭模态框
+    // 点击关闭按钮关闭预览框
     closeBtn.addEventListener('click', closeModal);
     
-    // 点击模态框外部关闭模态框
+    // 点击模态框外部关闭预览框
     window.addEventListener('click', function(event) {
         if (event.target == modal) {
             closeModal();
         }
     });
     
-    // ESC键关闭模态框
+    // ESC键关闭预览框
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape' && modal.style.display === 'block') {
             closeModal();
         }
     });
     
-    // 关闭模态框函数
+    // 关闭预览框函数
     function closeModal() {
         modal.style.display = 'none';
         document.body.style.overflow = ''; // 恢复背景滚动
@@ -230,12 +223,11 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     ];
     
-    // 当前筛选类别和页码
+    // 当前默认筛选方式和页码
     let currentCategory = 'all';
     let currentPage = 1;
     const articlesPerPage = 3; // 每页显示3篇文章
     
-    // 获取DOM元素
     const articlesContainer = document.querySelector('.articles-container');
     const filterButtons = document.querySelectorAll('.filter-btn');
     const paginationNumbersContainer = document.querySelector('.pagination-numbers');
@@ -246,35 +238,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleModalBody = document.querySelector('.article-modal-body');
     const articleCategory = document.querySelector('.article-category');
     
-    // 初始化文章展示
+    // 初始化文章
     function initArticles() {
-        // 确保文章区域存在
         if (!articlesContainer) return;
-        
-        // 初始化分页
+
         updatePagination();
-        
-        // 显示文章
+
         displayArticles();
         
-        // 添加筛选按钮事件
+        // 添加筛选逻辑
         filterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
-                // 更新按钮状态
+
                 filterButtons.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
-                // 更新当前类别和页码
+
                 currentCategory = this.getAttribute('data-category');
                 currentPage = 1;
-                
-                // 重新显示文章和分页
+  
                 updatePagination();
                 displayArticles();
             });
         });
         
-        // 分页按钮事件
+        // 分页逻辑
         if (prevBtn) {
             prevBtn.addEventListener('click', function() {
                 if (currentPage > 1) {
@@ -296,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // 关闭文章模态框事件
+        // 关闭文章框事件
         if (closeArticleModalBtn) {
             closeArticleModalBtn.addEventListener('click', function() {
                 articleModal.style.display = 'none';
@@ -344,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i <= totalPages; i++) {
             const pageNumber = document.createElement('span');
             pageNumber.classList.add('page-number');
+            
             if (i === currentPage) {
                 pageNumber.classList.add('active');
             }
@@ -357,8 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // 更新上一页/下一页按钮状态
-        if (prevBtn) prevBtn.disabled = currentPage === 1;
-        if (nextBtn) nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+        if (prevBtn) prevBtn.disabled = (currentPage === 1);
+        if (nextBtn) nextBtn.disabled = (currentPage === totalPages || totalPages === 0);
     }
     
     // 显示文章
@@ -428,8 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             articlesContainer.appendChild(articleCard);
         });
     }
-    
-    // 在openArticle函数中修改以下代码
+
     async function openArticle(articleId) {
         if (!articleModal || !articleModalBody) {
             console.error('Modal elements not found');
@@ -458,7 +445,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let markdown = await response.text();
             
-            // 检查marked是否可用
             if (typeof marked === 'undefined') {
                 console.error('Marked库未加载，使用简易Markdown解析');
                 // 使用简易解析作为备选
@@ -467,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 try {
                     // 使用marked解析Markdown
-                    const htmlContent = marked.parse(markdown); // 使用marked.parse而非直接调用marked
+                    const htmlContent = marked.parse(markdown);
                     articleModalBody.innerHTML = htmlContent;
                 } catch (markdownError) {
                     console.error('Marked解析错误:', markdownError);

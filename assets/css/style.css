@@ -6,7 +6,6 @@ html {
 *{
     margin: 0;
     padding: 0;
-
 }
 
 body{
@@ -102,7 +101,7 @@ a{
     position: relative;
     background: linear-gradient(to bottom, rgb(245, 245, 197), rgb(172, 212, 244));
     height: 400px;
-    display: flex; /* 使用flex布局实现左右并列 */
+    display: flex; 
     padding: 20px;
     box-sizing: border-box;
 }
@@ -126,7 +125,7 @@ a{
     transition: opacity 0.3s ease;
     pointer-events: none;
     left: auto; /* 取消左定位 */
-    top: auto; /* 取消顶部定位 */
+    top: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,7 +136,7 @@ a{
     pointer-events: auto;
 }
 
-/* 调整基本信息列表位置 */
+
 .basic-info-list {
     display: flex;
     justify-content: flex-start;
